@@ -1,1 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rainbow Loom Bracelet Order Form</title>
+    <style>
+      :root {
+        --bg: #fff8f1;
+        --panel: #ffffff;
+        --primary: #ff7aa2;
+        --primary-dark: #e85b88;
+        --accent: #6ec3d6;
+        --text: #2f2a2a;
+        --muted: #6d5f65;
+        --success: #2e8b57;
+        --shadow: rgba(56, 32, 28, 0.12);
+      }
 
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #fdf4f8 0%, #f5fbff 100%);
+        color: var(--text);
+      }
+
+      .container {
+        max-width: 980px;
+        margin: 32px auto;
+        padding: 0 20px 40px;
+      }
+
+      .hero {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.1rem, 5vw, 3.2rem);
+        margin: 0 0 12px;
+        color: var(--primary-dark);
+      }
+
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1.3fr 0.7fr;
+        gap: 24px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border-radius: 18px;
+        box-shadow: 0 12px 28px var(--shadow);
+        padding: 24px;
+      }
+
+      form {
+        display: grid;
+        gap: 18px;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #f0d7e0;
+        font-size: 1rem;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 2px solid rgba(110, 195, 214, 0.35);
+        border-color: var(--accent);
+      }
+
+      textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      .price-box {
+        background: #fff4f7;
+        border: 1px solid #f5dbe4;
+        border-radius: 12px;
+        padding: 16px;
+        margin-top: 8px;
+      }
+
+      .price-box strong {
+        display: block;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .price-list {
+        list-style: none;
+        margin: 8px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 6px;
+        color: var(--muted);
+      }
+
+      .price-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .submit-btn,
+      .admin-btn,
+      .toggle-btn {
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+      }
+
+      .submit-btn {
+        background: var(--primary);
+        color: white;
+      }
+
+      .submit-btn:hover,
+      .admin-btn:hover,
+      .toggle-btn:hover {
+        transform: translateY(-1px);
+        opacity: 0.96;
+      }
+
+      .admin-btn {
+        background: var(--accent);
+        color: white;
+        margin-top: 10px;
+      }
+
+      .status {
+        min-height: 24px;
+        font-weight: bold;
+        color: var(--success);
+      }
+
+      .admin-panel {
+        display: none;
+        margin-top: 18px;
+      }
+
+      .admin-panel.open {
+        display: block;
+      }
+
+      .admin-panel .passcode-box {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .admin-panel input {
+        flex: 1;
+      }
+
+      .toggle-btn {
+        background: #ffe9ef;
+        color: var(--primary-dark);
+      }
+
+      .orders-list {
+        margin-top: 18px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 10px 8px;
+        border-bottom: 1px solid #f2e1ea;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--primary-dark);
+      }
+
+      .empty-state {
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      @media (max-width: 760px) {
+        .layout,
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="hero">
+        <h1>Rainbow Loom Bracelet Order Form</h1>
+        <p>Choose your favorite loom color and bracelet style, then submit your order.</p>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <form id="orderForm">
+            <div class="field-row">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div>
+                <label for="braceletType">Type of bracelet</label>
+                <select id="braceletType" name="braceletType" required>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="expert">Expert</option>
+                  <option value="special">Special</option>
+                  <option value="fishtail">Fishtail</option>
+                  <option value="single">Single</option>
+                  <option value="double">Double</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="color">Bracelet color</label>
+                <select id="color" name="color" required>
+                  <option value="Red">Red</option>
+                  <option value="Orange">Orange</option>
+                  <option value="Yellow">Yellow</option>
+                  <option value="Green">Green</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Purple">Purple</option>
+                  <option value="Pink">Pink</option>
+                  <option value="Black">Black</option>
+                  <option value="White">White</option>
+                  <option value="Gold">Gold</option>
+                  <option value="Silver">Silver</option>
+                  <option value="Teal">Teal</option>
+                  <option value="Lavender">Lavender</option>
+                  <option value="Turquoise">Turquoise</option>
+                  <option value="Brown">Brown</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="notes">Extra notes</label>
+              <textarea id="notes" name="notes" placeholder="Any special details, size notes, or custom requests..."></textarea>
+            </div>
+
+            <div class="price-box">
+              <strong>Estimated Price</strong>
+              <div id="priceDisplay">$2.00</div>
+              <ul class="price-list">
+                <li><span>Beginner</span><span>$2.00</span></li>
+                <li><span>Intermediate</span><span>$2.50</span></li>
+                <li><span>Expert</span><span>$3.25</span></li>
+                <li><span>Special</span><span>$3.50</span></li>
+                <li><span>Fishtail</span><span>$1.00</span></li>
+                <li><span>Single</span><span>$0.75</span></li>
+                <li><span>Double</span><span>$1.00</span></li>
+              </ul>
+            </div>
+
+            <button class="submit-btn" type="submit">Submit Order</button>
+            <div class="status" id="statusMessage" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <aside class="panel">
+          <h2>Admin</h2>
+          <p>Orders are stored securely in this browser behind a passcode.</p>
+          <button id="toggleAdmin" class="toggle-btn" type="button">Open Order Dashboard</button>
+
+          <div id="adminPanel" class="admin-panel">
+            <div class="passcode-box">
+              <input id="passcodeInput" type="password" placeholder="Enter passcode" />
+              <button id="accessOrders" class="admin-btn" type="button">View Orders</button>
+            </div>
+
+            <div id="ordersList" class="orders-list"></div>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script>
+      const prices = {
+        beginner: 2.0,
+        intermediate: 2.5,
+        expert: 3.25,
+        special: 3.5,
+        fishtail: 1.0,
+        single: 0.75,
+        double: 1.0
+      };
+
+      const ADMIN_PASSCODE = 'looms2026';
+
+      const orderForm = document.getElementById('orderForm');
+      const braceletType = document.getElementById('braceletType');
+      const priceDisplay = document.getElementById('priceDisplay');
+      const statusMessage = document.getElementById('statusMessage');
+      const toggleAdmin = document.getElementById('toggleAdmin');
+      const adminPanel = document.getElementById('adminPanel');
+      const passcodeInput = document.getElementById('passcodeInput');
+      const accessOrders = document.getElementById('accessOrders');
+      const ordersList = document.getElementById('ordersList');
+
+      function formatPrice(value) {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        }).format(value);
+      }
+
+      function updatePrice() {
+        const selectedType = braceletType.value;
+        const amount = prices[selectedType] || 0;
+        priceDisplay.textContent = formatPrice(amount);
+      }
+
+      function readOrders() {
+        const saved = localStorage.getItem('braceletOrders');
+        try {
+          return saved ? JSON.parse(saved) : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveOrders(orders) {
+        localStorage.setItem('braceletOrders', JSON.stringify(orders));
+      }
+
+      function renderOrders() {
+        const orders = readOrders();
+
+        if (!orders.length) {
+          ordersList.innerHTML = '<p class="empty-state">No orders stored yet.</p>';
+          return;
+        }
+
+        const rows = orders
+          .map((order, index) => {
+            return `
+              <tr>
+                <td>${index + 1}</td>
+                <td>${order.name || 'N/A'}</td>
+                <td>${order.email || 'N/A'}</td>
+                <td>${order.color || 'N/A'}</td>
+                <td>${order.braceletType || 'N/A'}</td>
+                <td>${formatPrice(order.price || 0)}</td>
+              </tr>
+            `;
+          })
+          .join('');
+
+        ordersList.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Color</th>
+                <th>Type</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
+      }
+
+      braceletType.addEventListener('change', updatePrice);
+      updatePrice();
+
+      orderForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(orderForm);
+        const order = {
+          name: formData.get('name').trim(),
+          email: formData.get('email').trim(),
+          color: formData.get('color'),
+          braceletType: formData.get('braceletType'),
+          notes: formData.get('notes')?.trim() || '',
+          price: prices[formData.get('braceletType')] || 0,
+          createdAt: new Date().toISOString()
+        };
+
+        if (!order.name || !order.email || !order.color || !order.braceletType) {
+          statusMessage.textContent = 'Please complete all required fields.';
+          statusMessage.style.color = '#b42318';
+          return;
+        }
+
+        const orders = readOrders();
+        orders.push(order);
+        saveOrders(orders);
+
+        statusMessage.textContent = 'Order saved successfully!';
+        statusMessage.style.color = '#2e8b57';
+        orderForm.reset();
+        updatePrice();
+      });
+
+      toggleAdmin.addEventListener('click', function () {
+        adminPanel.classList.toggle('open');
+        passcodeInput.focus();
+      });
+
+      accessOrders.addEventListener('click', function () {
+        const enteredPasscode = passcodeInput.value.trim();
+
+        if (enteredPasscode === ADMIN_PASSCODE) {
+          renderOrders();
+        } else {
+          ordersList.innerHTML = '<p class="empty-state">Incorrect passcode. Try again.</p>';
+        }
+      });
+
+      passcodeInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          accessOrders.click();
+        }
+      });
+    </script>
+  </body>
+</html>
