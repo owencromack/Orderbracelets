@@ -29,9 +29,26 @@
       }
 
       .container {
-        max-width: 980px;
-        margin: 32px auto;
+        max-width: 1100px;
+        margin: 20px auto 40px;
         padding: 0 20px 40px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
+
+      .admin-tab {
+        background: var(--panel);
+        border: 1px solid #f3d7e4;
+        border-radius: 999px;
+        box-shadow: 0 8px 18px rgba(56, 32, 28, 0.06);
+        padding: 10px 18px;
+        font-weight: bold;
+        color: var(--primary-dark);
+        cursor: pointer;
       }
 
       .hero {
@@ -105,6 +122,31 @@
         resize: vertical;
       }
 
+      .color-picker {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      .color-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 10px;
+        border-radius: 10px;
+        border: 1px solid #f3dfe8;
+        background: #fffdfd;
+        font-size: 0.92rem;
+      }
+
+      .color-option input {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--primary);
+      }
+
       .price-box {
         background: #fff4f7;
         border: 1px solid #f5dbe4;
@@ -176,19 +218,14 @@
         display: block;
       }
 
-      .admin-panel .passcode-box {
+      .passcode-box {
         display: flex;
         gap: 10px;
         margin-bottom: 12px;
       }
 
-      .admin-panel input {
+      .passcode-box input {
         flex: 1;
-      }
-
-      .toggle-btn {
-        background: #ffe9ef;
-        color: var(--primary-dark);
       }
 
       .orders-list {
@@ -198,7 +235,7 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 0.92rem;
+        font-size: 0.88rem;
       }
 
       th,
@@ -220,7 +257,8 @@
 
       @media (max-width: 760px) {
         .layout,
-        .field-row {
+        .field-row,
+        .color-picker {
           grid-template-columns: 1fr;
         }
       }
@@ -228,9 +266,13 @@
   </head>
   <body>
     <div class="container">
+      <div class="topbar">
+        <button type="button" id="toggleAdmin" class="admin-tab">Admin</button>
+      </div>
+
       <header class="hero">
         <h1>Rainbow Loom Bracelet Order Form</h1>
-        <p>Choose your favorite loom color and bracelet style, then submit your order.</p>
+        <p>Choose your favorite loom colors and bracelet style, then submit your order.</p>
       </header>
 
       <main class="layout">
@@ -260,26 +302,34 @@
                   <option value="double">Double</option>
                 </select>
               </div>
+            </div>
 
-              <div>
-                <label for="color">Bracelet color</label>
-                <select id="color" name="color" required>
-                  <option value="Red">Red</option>
-                  <option value="Orange">Orange</option>
-                  <option value="Yellow">Yellow</option>
-                  <option value="Green">Green</option>
-                  <option value="Blue">Blue</option>
-                  <option value="Purple">Purple</option>
-                  <option value="Pink">Pink</option>
-                  <option value="Black">Black</option>
-                  <option value="White">White</option>
-                  <option value="Gold">Gold</option>
-                  <option value="Silver">Silver</option>
-                  <option value="Teal">Teal</option>
-                  <option value="Lavender">Lavender</option>
-                  <option value="Turquoise">Turquoise</option>
-                  <option value="Brown">Brown</option>
-                </select>
+            <div>
+              <label>Color(s)</label>
+              <div class="color-picker" id="colorPicker">
+                <label class="color-option"><input type="checkbox" name="colors" value="Red" /> Red</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Orange" /> Orange</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Yellow" /> Yellow</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Green" /> Green</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Blue" /> Blue</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Purple" /> Purple</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Pink" /> Pink</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Black" /> Black</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="White" /> White</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Brown" /> Brown</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Teal" /> Teal</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Aqua" /> Aqua</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Lavender" /> Lavender</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Turquoise" /> Turquoise</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Gold" /> Gold</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Silver" /> Silver</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Peach" /> Peach</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Coral" /> Coral</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Lime" /> Lime</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Maroon" /> Maroon</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Gray" /> Gray</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Navy" /> Navy</label>
+                <label class="color-option"><input type="checkbox" name="colors" value="Dark Green" /> Dark Green</label>
               </div>
             </div>
 
@@ -308,10 +358,6 @@
         </section>
 
         <aside class="panel">
-          <h2>Admin</h2>
-          <p>Orders are stored securely in this browser behind a passcode.</p>
-          <button id="toggleAdmin" class="toggle-btn" type="button">Open Order Dashboard</button>
-
           <div id="adminPanel" class="admin-panel">
             <div class="passcode-box">
               <input id="passcodeInput" type="password" placeholder="Enter passcode" />
@@ -373,6 +419,11 @@
         localStorage.setItem('braceletOrders', JSON.stringify(orders));
       }
 
+      function getSelectedColors() {
+        const checked = Array.from(document.querySelectorAll('input[name="colors"]:checked'));
+        return checked.map((item) => item.value);
+      }
+
       function renderOrders() {
         const orders = readOrders();
 
@@ -383,14 +434,18 @@
 
         const rows = orders
           .map((order, index) => {
+            const colors = Array.isArray(order.colors) ? order.colors.join(', ') : 'N/A';
+            const notes = order.notes ? order.notes : '—';
+
             return `
               <tr>
                 <td>${index + 1}</td>
                 <td>${order.name || 'N/A'}</td>
                 <td>${order.email || 'N/A'}</td>
-                <td>${order.color || 'N/A'}</td>
+                <td>${colors}</td>
                 <td>${order.braceletType || 'N/A'}</td>
                 <td>${formatPrice(order.price || 0)}</td>
+                <td>${notes}</td>
               </tr>
             `;
           })
@@ -403,9 +458,10 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Color</th>
+                <th>Colors</th>
                 <th>Type</th>
                 <th>Price</th>
+                <th>Notes</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
@@ -419,18 +475,26 @@
       orderForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
+        const selectedColors = getSelectedColors();
+
+        if (selectedColors.length === 0) {
+          statusMessage.textContent = 'Please select at least one color.';
+          statusMessage.style.color = '#b42318';
+          return;
+        }
+
         const formData = new FormData(orderForm);
         const order = {
           name: formData.get('name').trim(),
           email: formData.get('email').trim(),
-          color: formData.get('color'),
+          colors: selectedColors,
           braceletType: formData.get('braceletType'),
           notes: formData.get('notes')?.trim() || '',
           price: prices[formData.get('braceletType')] || 0,
           createdAt: new Date().toISOString()
         };
 
-        if (!order.name || !order.email || !order.color || !order.braceletType) {
+        if (!order.name || !order.email || !order.braceletType) {
           statusMessage.textContent = 'Please complete all required fields.';
           statusMessage.style.color = '#b42318';
           return;
